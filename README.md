@@ -1,40 +1,202 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# **MealMate – Smart Recipe Finder & Weekly Meal Planner**
 
-## Getting Started
+MealMate is a modern web application designed to help users discover new recipes, explore detailed cooking instructions, plan weekly meals, and organize their cooking routine.  
+This project is built using **Next.js (Pages Router)** and demonstrates key concepts from CPAN144, including:
 
-First, run the development server:
+- Component‑based architecture
+- State management (React state + Context API)
+- Routing
+- Styling & responsive design
+- Project structure & planning
+
+This repository contains **Phase 1** of the project, focusing on structure, layout, routing, and UI skeletons.
+
+---
+
+## 🚀 **Project Features (Phase 1)**
+
+Phase 1 includes the foundational structure of the MealMate application:
+
+### **✔ Full Project Structure**
+
+- `pages/` for routing
+- `components/` for reusable UI
+- `context/` for global state
+- `styles/` for global CSS
+- `public/` for assets (logo, hero image)
+
+### **✔ Global Layout**
+
+- Navigation bar with logo
+- Sticky footer
+- Responsive main content wrapper
+
+### **✔ Pages Implemented**
+
+- **Home Page** (`/`)
+  - Hero section with image
+  - Icon‑based navigation cards
+
+- **Recipes Page** (`/recipes`)
+  - Search bar
+  - Filters toolbar
+  - Responsive recipe grid
+  - Placeholder recipe cards
+
+- **Recipe Details Page** (`/recipes/[id]`)
+  - Static layout for ingredients, instructions, nutrition
+  - “Add to Favorites” / “Add to Meal Plan” buttons (UI only)
+
+- **Meal Planner Page** (`/meal-planner`)
+  - Weekly grid layout (Mon–Sun)
+  - Connected to global context (static for Phase 1)
+
+- **Favorites Page** (`/favorites`)
+  - Placeholder list for saved recipes
+
+### **✔ Global State (Context API)**
+
+- `favorites` array
+- `mealPlan` object (Mon–Sun)
+- Placeholder action functions (logic added in Phase 2)
+
+### **✔ Styling & Responsiveness**
+
+- Fully custom `globals.css`
+- Responsive grids
+- Responsive navbar
+- Clean, modern UI
+- React Icons integrated
+
+---
+
+## 📁 **Project Structure**
+
+```
+src/
+  pages/
+    index.js
+    recipes/
+      index.js
+      [id].js
+    meal-planner/
+      index.js
+    favorites/
+      index.js
+    _app.js
+    _document.js
+
+  components/
+    NavBar.js
+    Footer.js
+    HomeHero.js
+    RecipeCard.js
+    RecipeFilters.js
+    SearchBar.js
+    MealPlannerGrid.js
+
+  context/
+    AppContext.js
+
+  styles/
+    globals.css
+
+public/
+  logo.png
+  hero.jpg
+```
+
+---
+
+## 🧠 **Phase 1 Learning Objectives Covered**
+
+### **1. Project Setup & Structure**
+
+- Next.js project initialized
+- Organized folder structure
+- Navigation implemented
+
+### **2. Components & State**
+
+- Multiple reusable components
+- Global state with Context API
+- React state used across pages
+
+### **3. Routing**
+
+- At least 3 main pages (you have 5)
+- Each page has unique content
+- Interactive UI elements present
+
+### **4. Styling & Responsiveness**
+
+- Custom CSS
+- Responsive layout
+- Consistent color scheme and typography
+
+### **5. Submission Requirements**
+
+- GitHub repository
+- Screenshots of:
+  - Home page
+  - Recipes page
+  - Recipe details page
+  - Meal planner page
+  - Favorites page
+  - One interactive component (search bar, filters, buttons, etc.)
+
+---
+
+## 🛠️ **How to Run the Project**
+
+### **Install dependencies**
+
+```bash
+npm install
+```
+
+### **Run development server**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **Open in browser**
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## 🔮 **Planned Features (Phase 2 & 3)**
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+These features are part of the full MealMate vision and will be implemented in later phases:
 
-## Learn More
+- Real recipe API integration (Spoonacular / Edamam)
+- Dynamic recipe details
+- Add/remove favorites
+- Add recipes to meal planner
+- Drag‑and‑drop weekly planner
+- Shopping list generator
+- Pagination
+- Advanced filters (cuisine, calories, diet, popularity)
+- Loading skeletons
+- Error handling
+- Deployment to Vercel
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## 👥 **Team Roles (from Proposal)**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Mykhaylo Maslyuk** – API Integration & Data Handling
+- **Maksym Orlov** – Frontend Components
+- **Jonathan Griffith & Ethan Huynh** – State Management & Logic
+- **Ramone Mitchell‑Mckoy** – Styling & UI/UX
+- **All Members** – Deployment & Testing
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 **License**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+This project is for educational purposes as part of CPAN144.
