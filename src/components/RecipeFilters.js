@@ -1,25 +1,32 @@
-export default function RecipeFilters() {
+export default function RecipeFilters({
+  cuisine,
+  diet,
+  sort,
+  onCuisineChange,
+  onDietChange,
+  onSortChange,
+}) {
   return (
     <div className="filters-container">
-      <select>
-        <option>Cuisine</option>
-        <option>Italian</option>
-        <option>Mexican</option>
-        <option>Asian</option>
+      <select value={cuisine} onChange={(e) => onCuisineChange(e.target.value)}>
+        <option value="">All Cuisines</option>
+        <option value="Italian">Italian</option>
+        <option value="Mexican">Mexican</option>
+        <option value="Asian">Asian</option>
       </select>
 
-      <select>
-        <option>Diet</option>
-        <option>Vegan</option>
-        <option>Vegetarian</option>
-        <option>Keto</option>
+      <select value={diet} onChange={(e) => onDietChange(e.target.value)}>
+        <option value="">All Diets</option>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="gluten free">Gluten Free</option>
       </select>
 
-      <select>
-        <option>Sort</option>
-        <option>Most Popular</option>
-        <option>Recent</option>
-        <option>Lowest Calories</option>
+      <select value={sort} onChange={(e) => onSortChange(e.target.value)}>
+        <option value="">Sort</option>
+        <option value="time-asc">Time: Low to High</option>
+        <option value="time-desc">Time: High to Low</option>
+        <option value="calories-asc">Calories: Low to High</option>
+        <option value="calories-desc">Calories: High to Low</option>
       </select>
     </div>
   );

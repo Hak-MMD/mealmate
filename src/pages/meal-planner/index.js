@@ -1,22 +1,42 @@
-import MealPlannerGrid from "../../components/MealPlannerGrid";
+import Link from "next/link";
+import { useAppContext } from "../../context/AppContext";
+
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export default function MealPlannerPage() {
+  const { mealPlan, recipes } = useAppContext();
+
+  const getRecipeForDay = (day) => {
+    const id = mealPlan[day];
+    if (!id) return null;
+    return recipes.find((r) => r.id === id) || null;
+  };
+
   return (
     <section>
       <h1 className="page-title">Weekly Meal Planner</h1>
       <p className="page-subtitle">
-        Assign recipes to days of the week. (Static layout for Phase 1.)
+        Recipes assigned from the recipe details page will appear here.
       </p>
 
-      <MealPlannerGrid />
-
-      <section style={{ marginTop: "1.5rem" }}>
-        <h2 className="section-title">How it will work</h2>
-        <p className="section-subtitle">
-          In later phases, you&apos;ll be able to add recipes from the details
-          page, drag and drop meals between days, and generate a shopping list.
-        </p>
-      </section>
+      <div className="meal-planner-grid">
+        {DAYS.map((day) => {
+          const recipe = getRecipeForDay(day);
+          return (
+            <div key={day} className="meal-day-card">
+              <h3>{day}</h3>
+              {recipe ? (
+                <>
+                  <p>{recipe.title}</p>
+                  <Link href={`/recipes/${recipe.id}`}>View recipe</Link>
+                </>
+              ) : (
+                <p>No recipe assigned.</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }

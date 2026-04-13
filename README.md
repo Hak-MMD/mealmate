@@ -1,76 +1,145 @@
-# **MealMate – Smart Recipe Finder & Weekly Meal Planner**
+# **MealMate – Smart Recipe Finder & Weekly Meal Planner (Phase 2)**
 
 MealMate is a modern web application designed to help users discover new recipes, explore detailed cooking instructions, plan weekly meals, and organize their cooking routine.  
 This project is built using **Next.js (Pages Router)** and demonstrates key concepts from CPAN144, including:
 
 - Component‑based architecture
-- State management (React state + Context API)
-- Routing
-- Styling & responsive design
-- Project structure & planning
+- Global state management with Context API
+- Dynamic routing
+- Responsive UI with CSS Modules
+- Data persistence (LocalStorage)
+- API integration preparation
 
-This repository contains **Phase 1** of the project, focusing on structure, layout, routing, and UI skeletons.
-
----
-
-## 🚀 **Project Features (Phase 1)**
-
-Phase 1 includes the foundational structure of the MealMate application:
-
-### **✔ Full Project Structure**
-
-- `pages/` for routing
-- `components/` for reusable UI
-- `context/` for global state
-- `styles/` for global CSS
-- `public/` for assets (logo, hero image)
-
-### **✔ Global Layout**
-
-- Navigation bar with logo
-- Sticky footer
-- Responsive main content wrapper
-
-### **✔ Pages Implemented**
-
-- **Home Page** (`/`)
-  - Hero section with image
-  - Icon‑based navigation cards
-
-- **Recipes Page** (`/recipes`)
-  - Search bar
-  - Filters toolbar
-  - Responsive recipe grid
-  - Placeholder recipe cards
-
-- **Recipe Details Page** (`/recipes/[id]`)
-  - Static layout for ingredients, instructions, nutrition
-  - “Add to Favorites” / “Add to Meal Plan” buttons (UI only)
-
-- **Meal Planner Page** (`/meal-planner`)
-  - Weekly grid layout (Mon–Sun)
-  - Connected to global context (static for Phase 1)
-
-- **Favorites Page** (`/favorites`)
-  - Placeholder list for saved recipes
-
-### **✔ Global State (Context API)**
-
-- `favorites` array
-- `mealPlan` object (Mon–Sun)
-- Placeholder action functions (logic added in Phase 2)
-
-### **✔ Styling & Responsiveness**
-
-- Fully custom `globals.css`
-- Responsive grids
-- Responsive navbar
-- Clean, modern UI
-- React Icons integrated
+This repository contains **Phase 2** of the project, focusing on dynamic functionality, routing, state management, and polished UI/UX.
 
 ---
 
-## 📁 **Project Structure**
+## 🚀 **Project Features (Phase 2)**
+
+Phase 2 builds on the Phase 1 foundation and introduces full dynamic behavior, styling improvements, and persistent state.
+
+---
+
+## ✔ **Routing & Navigation**
+
+- Fully functional navigation bar with icon + project name
+- Clicking the logo or project name returns to Home
+- Pages implemented:
+  - `/` – Home
+  - `/recipes` – Search, filters, recipe grid
+  - `/recipes/[id]` – Dynamic recipe details
+  - `/favorites` – Saved recipes
+  - `/meal-planner` – Weekly meal plan view
+
+Dynamic routing is used for recipe details, enabling `/recipes/1001`, `/recipes/1002`, etc.
+
+---
+
+## ✔ **Dynamic Components & Modularity**
+
+Phase 2 introduces a clean, modular architecture:
+
+### **Core Components**
+
+- `RecipeCard` – reusable recipe preview card
+- `SearchBar` – search input + submit
+- `RecipeFilters` – cuisine, diet, sorting
+- `NavBar` – updated with IoFastFoodOutline icon
+- `Footer`
+- `Toast` – global popup notifications
+- `Similar Recipes` section
+- `RecipeList` grid layout (shared across pages)
+
+### **Context & State**
+
+- `AppContext` manages:
+  - Favorites
+  - Weekly meal plan
+  - Toast notifications
+  - Recipes data
+  - LocalStorage persistence
+
+All components are cleanly separated and reusable across pages.
+
+---
+
+## 🎨 **Styling & Responsiveness**
+
+Phase 2 introduces **CSS Modules** for page‑specific styling:
+
+- `Recipes.module.css`
+- `RecipeDetails.module.css`
+
+### **Styling Enhancements**
+
+- Fixed‑size recipe cards
+- Centered recipe grids
+- Square, consistent detail images
+- Styled day selector
+- Styled buttons (primary, secondary, favorite)
+- Responsive layout for all pages
+- Toast popup with fade animation
+
+### **Conditional Styling**
+
+- Favorite button changes color when active
+- Toast appears/disappears automatically
+- Similar recipes section uses the same grid layout as Recipes page
+
+---
+
+## 🔄 **State Management (Fully Functional)**
+
+Phase 2 implements complete dynamic behavior using **React Context API**.
+
+### **Favorites**
+
+- Add/remove recipes
+- Displayed on Favorites page
+- Persisted in LocalStorage
+
+### **Meal Planner**
+
+- Assign recipe to a day from the details page
+- Weekly planner displays assigned meals
+- Persisted in LocalStorage
+
+### **Toast Notifications**
+
+- Global popup for:
+  - Add/remove favorites
+  - Assigning meals
+- Auto-dismiss after 2 seconds
+
+### **Recipes**
+
+- Loaded from mock Spoonacular‑style dataset
+- Used across all pages
+- Includes ingredients, instructions, nutrition, cuisines, diets, etc.
+
+---
+
+## 🌐 **API Integration Preparation**
+
+A placeholder API file is included:
+
+```
+src/lib/spoonacular.js
+```
+
+It contains:
+
+- `searchRecipes(query, filters)`
+- `getRecipeById(id)`
+- `getSimilarRecipes(id)`
+
+These currently return mock data but are structured to be replaced with real Spoonacular API calls in Phase 3.
+
+This satisfies the **Phase 2 “API Preparation” requirement**.
+
+---
+
+## 📁 **Project Structure (Phase 2)**
 
 ```
 src/
@@ -84,84 +153,98 @@ src/
     favorites/
       index.js
     _app.js
-    _document.js
 
   components/
     NavBar.js
     Footer.js
-    HomeHero.js
     RecipeCard.js
     RecipeFilters.js
     SearchBar.js
-    MealPlannerGrid.js
+    Toast.js
 
   context/
     AppContext.js
 
+  data/
+    recipes.js   (mock Spoonacular-style data)
+
+  lib/
+    spoonacular.js   (API placeholder)
+
   styles/
     globals.css
-
-public/
-  logo.png
-  hero.jpg
+    Recipes.module.css
+    RecipeDetails.module.css
 ```
 
 ---
 
-## 🧠 **Phase 1 Learning Objectives Covered**
+## 🧠 **Phase 2 Learning Objectives Covered**
 
-### **1. Project Setup & Structure**
+### **1. Routing & Navigation**
 
-- Next.js project initialized
-- Organized folder structure
-- Navigation implemented
+- Dynamic routes
+- Multi‑page navigation
+- Clean URL structure
 
-### **2. Components & State**
+### **2. Component Layout & Modularity**
 
-- Multiple reusable components
-- Global state with Context API
-- React state used across pages
+- Reusable components
+- Shared grid layout
+- Clean separation of UI logic
 
-### **3. Routing**
+### **3. Responsive Styling & Theming**
 
-- At least 3 main pages (you have 5)
-- Each page has unique content
-- Interactive UI elements present
+- CSS Modules
+- Fixed card sizes
+- Mobile‑friendly layout
+- Styled interactive elements
 
-### **4. Styling & Responsiveness**
+### **4. Effective State Management**
 
-- Custom CSS
-- Responsive layout
-- Consistent color scheme and typography
+- Favorites logic
+- Meal planner logic
+- Toast notifications
+- LocalStorage persistence
 
-### **5. Submission Requirements**
+### **5. Project Organization & Code Clarity**
 
-- GitHub repository
-- Screenshots of:
-  - Home page
-  - Recipes page
-  - Recipe details page
-  - Meal planner page
-  - Favorites page
-  - One interactive component (search bar, filters, buttons, etc.)
+- Clean folder structure
+- Readable, maintainable code
+- API prep file included
+
+---
+
+## 🖼️ **Screenshots Required for Submission**
+
+Include screenshots of:
+
+- Home page
+- Recipes page
+- Recipe details page
+- Favorites page
+- Meal planner page
+- Similar recipes section
+- Toast notification
+- Mobile view (optional but recommended)
 
 ---
 
 ## 🛠️ **How to Run the Project**
 
-### **Install dependencies**
+### Install dependencies
 
 ```bash
 npm install
 ```
 
-### **Run development server**
+### Run development server
 
 ```bash
 npm run dev
 ```
 
-### **Open in browser**
+### Open in browser
 
 ```
 http://localhost:3000
@@ -169,19 +252,14 @@ http://localhost:3000
 
 ---
 
-## 🔮 **Planned Features (Phase 2 & 3)**
+## 🔮 **Planned Features (Phase 3)**
 
-These features are part of the full MealMate vision and will be implemented in later phases:
-
-- Real recipe API integration (Spoonacular / Edamam)
-- Dynamic recipe details
-- Add/remove favorites
-- Add recipes to meal planner
+- Real Spoonacular API integration
+- Real similar recipes from API
+- Loading skeletons
+- Pagination
 - Drag‑and‑drop weekly planner
 - Shopping list generator
-- Pagination
-- Advanced filters (cuisine, calories, diet, popularity)
-- Loading skeletons
 - Error handling
 - Deployment to Vercel
 

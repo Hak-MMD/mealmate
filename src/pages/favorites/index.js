@@ -1,27 +1,26 @@
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { useAppContext } from "../../context/AppContext";
+import RecipeCard from "../../components/RecipeCard";
 
 export default function FavoritesPage() {
-  const { favorites } = useContext(AppContext);
+  const { recipes, favorites } = useAppContext();
+
+  const favoriteRecipes = recipes.filter((r) => favorites.includes(r.id));
 
   return (
     <section>
       <h1 className="page-title">Favorites</h1>
       <p className="page-subtitle">
-        Recipes you&apos;ve saved for later. (Static layout for Phase 1.)
+        Recipes you have marked as favorites. Click a card to view details.
       </p>
 
-      {favorites.length === 0 ? (
-        <p>
-          No favorites yet. In later phases, you&apos;ll be able to add recipes
-          here from the details page.
-        </p>
+      {favoriteRecipes.length === 0 ? (
+        <p>You have no favorite recipes yet.</p>
       ) : (
-        <ul>
-          {favorites.map((recipe) => (
-            <li key={recipe.id}>{recipe.title}</li>
+        <div className="favorites-grid">
+          {favoriteRecipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
-        </ul>
+        </div>
       )}
     </section>
   );

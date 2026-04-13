@@ -1,14 +1,22 @@
-export default function SearchBar() {
+export default function SearchBar({ value, onChange, onSubmit }) {
   return (
-    <div className="search-bar">
+    <form
+      className="search-bar"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit?.();
+      }}
+    >
       <input
         className="search-input"
         type="text"
         placeholder="Search recipes..."
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
-      <button className="search-btn" type="button">
+      <button className="search-btn" type="submit">
         Search
       </button>
-    </div>
+    </form>
   );
 }

@@ -1,19 +1,39 @@
 import Link from "next/link";
+import { useAppContext } from "../context/AppContext";
+import styles from "../styles/Recipes.module.css";
 
-export default function RecipeCard() {
-  const id = 1;
+export default function RecipeCard({ recipe }) {
+  const { isFavorite } = useAppContext();
+  const favorite = isFavorite(recipe.id);
 
   return (
-    <article className="recipe-card">
-      <div className="recipe-card-image-placeholder">Image</div>
+    <article className={styles.card}>
+      <div className={styles.cardImageWrapper}>
+        <img
+          src={recipe.imageSmall || recipe.image}
+          alt={recipe.title}
+          className={styles.cardImage}
+        />
+      </div>
 
-      <div className="recipe-card-body">
-        <h3 className="recipe-card-title">Sample Recipe Title</h3>
-        <p className="recipe-card-meta">Cuisine: Italian · 450 kcal · 30 min</p>
+      <div className={styles.cardBody}>
+        <h3 className={styles.cardTitle}>{recipe.title}</h3>
+        <p className={styles.cardMeta}>
+          {recipe.readyInMinutes} min · {recipe.servings} servings
+        </p>
+        <p className={styles.cardMeta}>
+          {recipe.cuisines?.[0] || "General"}{" "}
+          {recipe.diets && recipe.diets.length > 0
+            ? "· " + recipe.diets.join(", ")
+            : ""}
+        </p>
 
-        <Link href={`/recipes/${id}`} className="recipe-card-link">
-          View Details
-        </Link>
+        <div className={styles.cardFooter}>
+          <Link href={`/recipes/${recipe.id}`} className={styles.cardLink}>
+            View Details
+          </Link>
+          {favorite && <span className={styles.favoriteBadge}>★ Favorite</span>}
+        </div>
       </div>
     </article>
   );
