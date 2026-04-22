@@ -5,15 +5,15 @@ export default function HomePage() {
   return (
     <>
       <section className="home-hero">
-        <div className="home-hero-text">
+        <img src="/hero.jpg" alt="Delicious food" className="home-hero-img" />
+
+        <div className="home-hero-overlay">
           <h1 className="home-hero-title">MealMate – Smart Recipe Planner</h1>
           <p className="home-hero-subtitle">
             Discover recipes, plan your weekly meals, and simplify your cooking
             routine.
           </p>
         </div>
-
-        <div className="home-hero-image"></div>
       </section>
 
       <section style={{ marginTop: "2rem" }}>

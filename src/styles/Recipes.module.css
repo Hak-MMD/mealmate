@@ -54,3 +54,31 @@
   font-size: 0.8rem;
   color: #ef4444;
 }
+
+.pagination {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pageButton {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: none;
+  background-color: #111827;
+  color: #f9fafb;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.pageInfo {
+  font-size: 0.9rem;
+  color: #4b5563;
+}

@@ -1,49 +1,55 @@
-import { recipes } from "../data/recipes";
+// src/lib/spoonacular.js
+const API_KEY = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
+const BASE_URL = "https://api.spoonacular.com";
 
-// In Phase 3, replace internals with real fetch calls to Spoonacular.
-// Keep function signatures the same so you don't refactor components.
-
-export async function searchRecipes(query, filters = {}) {
-  const { cuisine, diet, sort } = filters;
-  let result = [...recipes];
-
-  if (query && query.trim()) {
-    const q = query.toLowerCase();
-    result = result.filter((r) => r.title.toLowerCase().includes(q));
+async function fetchJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`API error: ${res.status}`);
   }
+  return res.json();
+}
 
-  if (cuisine) {
-    result = result.filter((r) => r.cuisines?.includes(cuisine));
-  }
+// page starts from 1
+export async function searchRecipes(query, filters = {}, page = 1) {
+  const number = 12;
+  const offset = (page - 1) * number;
 
-  if (diet) {
-    result = result.filter((r) =>
-      r.diets?.map((d) => d.toLowerCase()).includes(diet.toLowerCase()),
-    );
-  }
+  const params = new URLSearchParams({
+    apiKey: API_KEY,
+    query: query || "",
+    number: String(number),
+    offset: String(offset),
+    addRecipeInformation: "true",
+  });
 
-  if (sort === "time-asc") {
-    result.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
-  } else if (sort === "time-desc") {
-    result.sort((a, b) => b.readyInMinutes - a.readyInMinutes);
-  }
+  if (filters.cuisine) params.append("cuisine", filters.cuisine);
+  if (filters.diet) params.append("diet", filters.diet);
 
-  return result;
+  const url = `${BASE_URL}/recipes/complexSearch?${params.toString()}`;
+  const data = await fetchJson(url);
+
+  return {
+    results: data.results || [],
+    totalResults: data.totalResults || 0,
+  };
 }
 
 export async function getRecipeById(id) {
-  return recipes.find((r) => r.id === Number(id)) || null;
+  const url = `${BASE_URL}/recipes/${id}/information?apiKey=${API_KEY}&includeNutrition=true`;
+  return fetchJson(url);
 }
 
+// Efficient similar recipes: 1 call to /similar, 1 call to /informationBulk
 export async function getSimilarRecipes(id) {
-  const recipe = recipes.find((r) => r.id === Number(id));
-  if (!recipe) return [];
-  const sameCuisine = recipe.cuisines?.[0];
-  return recipes
-    .filter(
-      (r) =>
-        r.id !== recipe.id &&
-        (sameCuisine ? r.cuisines?.includes(sameCuisine) : true),
-    )
-    .slice(0, 2);
+  const similarUrl = `${BASE_URL}/recipes/${id}/similar?apiKey=${API_KEY}&number=4`;
+  const similar = await fetchJson(similarUrl); // [{id, title, ...}]
+
+  const ids = similar.map((r) => r.id).join(",");
+  if (!ids) return [];
+
+  const bulkUrl = `${BASE_URL}/recipes/informationBulk?apiKey=${API_KEY}&ids=${ids}`;
+  const detailed = await fetchJson(bulkUrl); // full recipe objects with image, etc.
+
+  return detailed || [];
 }

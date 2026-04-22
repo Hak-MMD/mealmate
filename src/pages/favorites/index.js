@@ -1,27 +1,23 @@
-import { useAppContext } from "../../context/AppContext";
+// src/pages/favorites/index.js
 import RecipeCard from "../../components/RecipeCard";
+import { useAppContext } from "../../context/AppContext";
 
 export default function FavoritesPage() {
-  const { recipes, favorites } = useAppContext();
-
-  const favoriteRecipes = recipes.filter((r) => favorites.includes(r.id));
+  const { favorites } = useAppContext();
 
   return (
     <section>
-      <h1 className="page-title">Favorites</h1>
+      <h1 className="page-title">Favorite Recipes</h1>
       <p className="page-subtitle">
-        Recipes you have marked as favorites. Click a card to view details.
+        Your saved recipes are stored locally in your browser.
       </p>
 
-      {favoriteRecipes.length === 0 ? (
-        <p>You have no favorite recipes yet.</p>
-      ) : (
-        <div className="favorites-grid">
-          {favoriteRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
-      )}
+      <div className="recipe-list">
+        {favorites.length === 0 && <p>No favorites yet.</p>}
+        {favorites.map((recipe, index) => (
+          <RecipeCard key={recipe.id || `fav-${index}`} recipe={recipe} />
+        ))}
+      </div>
     </section>
   );
 }

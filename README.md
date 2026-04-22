@@ -1,145 +1,218 @@
-# **MealMate – Smart Recipe Finder & Weekly Meal Planner (Phase 2)**
+# **MealMate – Smart Recipe Finder & Weekly Meal Planner (Phase 3)**
 
-MealMate is a modern web application designed to help users discover new recipes, explore detailed cooking instructions, plan weekly meals, and organize their cooking routine.  
-This project is built using **Next.js (Pages Router)** and demonstrates key concepts from CPAN144, including:
+MealMate is a modern web application built with **Next.js (Pages Router)** that helps users discover recipes, explore detailed cooking instructions, save favorites, and plan weekly meals.  
+This project demonstrates advanced front‑end development concepts from CPAN144, including:
 
 - Component‑based architecture
-- Global state management with Context API
+- Shared state management with Context API
 - Dynamic routing
+- API integration with Spoonacular
+- Pagination & performance optimization
 - Responsive UI with CSS Modules
-- Data persistence (LocalStorage)
-- API integration preparation
+- LocalStorage persistence
+- Deployment‑ready structure
 
-This repository contains **Phase 2** of the project, focusing on dynamic functionality, routing, state management, and polished UI/UX.
-
----
-
-## 🚀 **Project Features (Phase 2)**
-
-Phase 2 builds on the Phase 1 foundation and introduces full dynamic behavior, styling improvements, and persistent state.
+This repository contains **Phase 3**, the final and fully functional version of the project.
 
 ---
 
-## ✔ **Routing & Navigation**
+# 🚀 **Final Features (Phase 3)**
 
-- Fully functional navigation bar with icon + project name
-- Clicking the logo or project name returns to Home
-- Pages implemented:
-  - `/` – Home
-  - `/recipes` – Search, filters, recipe grid
-  - `/recipes/[id]` – Dynamic recipe details
-  - `/favorites` – Saved recipes
-  - `/meal-planner` – Weekly meal plan view
-
-Dynamic routing is used for recipe details, enabling `/recipes/1001`, `/recipes/1002`, etc.
+Phase 3 completes the application with real API integration, performance improvements, and a polished user experience.
 
 ---
 
-## ✔ **Dynamic Components & Modularity**
+# 🧭 **Routing & Navigation**
 
-Phase 2 introduces a clean, modular architecture:
+The application uses the Next.js Pages Router with clean, intuitive navigation:
+
+| Route           | Description                                 |
+| --------------- | ------------------------------------------- |
+| `/`             | Home page with hero section + quick actions |
+| `/recipes`      | Search, filters, pagination, recipe grid    |
+| `/recipes/[id]` | Dynamic recipe details page                 |
+| `/favorites`    | User’s saved favorite recipes               |
+| `/meal-planner` | Weekly meal planner with assigned meals     |
+
+Navigation bar and logo provide consistent access across all pages.
+
+---
+
+# 🧩 **Component Architecture**
+
+MealMate uses a modular, reusable component structure:
 
 ### **Core Components**
 
 - `RecipeCard` – reusable recipe preview card
-- `SearchBar` – search input + submit
+- `SearchBar` – controlled search input
 - `RecipeFilters` – cuisine, diet, sorting
-- `NavBar` – updated with IoFastFoodOutline icon
-- `Footer`
-- `Toast` – global popup notifications
+- `NavBar` – top navigation with icon
+- `Footer` – global footer
+- `Toast` – global notification system
 - `Similar Recipes` section
-- `RecipeList` grid layout (shared across pages)
+- `Meal Planner Grid`
+- `Home Action Cards`
 
-### **Context & State**
+### **Context & Shared State**
 
-- `AppContext` manages:
-  - Favorites
-  - Weekly meal plan
-  - Toast notifications
-  - Recipes data
-  - LocalStorage persistence
+`AppContext` manages:
 
-All components are cleanly separated and reusable across pages.
+- Favorites (full recipe objects)
+- Weekly meal plan (full recipe objects per day)
+- Toast notifications
+- LocalStorage persistence
 
----
-
-## 🎨 **Styling & Responsiveness**
-
-Phase 2 introduces **CSS Modules** for page‑specific styling:
-
-- `Recipes.module.css`
-- `RecipeDetails.module.css`
-
-### **Styling Enhancements**
-
-- Fixed‑size recipe cards
-- Centered recipe grids
-- Square, consistent detail images
-- Styled day selector
-- Styled buttons (primary, secondary, favorite)
-- Responsive layout for all pages
-- Toast popup with fade animation
-
-### **Conditional Styling**
-
-- Favorite button changes color when active
-- Toast appears/disappears automatically
-- Similar recipes section uses the same grid layout as Recipes page
+This eliminates prop‑drilling and keeps the app consistent across pages.
 
 ---
 
-## 🔄 **State Management (Fully Functional)**
+# 🌐 **Real API Integration (Spoonacular)**
 
-Phase 2 implements complete dynamic behavior using **React Context API**.
+Phase 3 replaces mock data with **live API calls** using Spoonacular.
+
+### **Endpoints Used**
+
+- `GET /recipes/complexSearch`
+  - With `addRecipeInformation=true`
+  - Supports pagination (`number`, `offset`)
+  - Supports filters (cuisine, diet)
+
+- `GET /recipes/{id}/information`
+  - Includes ingredients, instructions, nutrition
+
+- `GET /recipes/{id}/similar`
+  - Returns similar recipe IDs
+
+- `GET /recipes/informationBulk`
+  - Fetches full similar recipe objects in **one batch**
+  - Reduces API usage from 4–6 calls → **2 calls total**
+
+### **API Efficiency**
+
+- Pagination loads **12 recipes per page**
+- Similar recipes fetched in **bulk**
+- No repeated calls for favorites or meal planner
+- LocalStorage prevents unnecessary re-fetching
+
+---
+
+# 🔄 **State Management (Final Version)**
 
 ### **Favorites**
 
-- Add/remove recipes
-- Displayed on Favorites page
-- Persisted in LocalStorage
+- Stores **full recipe objects**
+- Prevents duplicate entries
+- Persists in LocalStorage
+- Zero API calls on Favorites page
 
 ### **Meal Planner**
 
-- Assign recipe to a day from the details page
-- Weekly planner displays assigned meals
-- Persisted in LocalStorage
+- Stores **full recipe objects per day**
+- Displays assigned meals with links
+- Persists in LocalStorage
+- Zero API calls on Meal Planner page
 
 ### **Toast Notifications**
 
 - Global popup for:
-  - Add/remove favorites
+  - Adding/removing favorites
   - Assigning meals
 - Auto-dismiss after 2 seconds
 
-### **Recipes**
+---
 
-- Loaded from mock Spoonacular‑style dataset
-- Used across all pages
-- Includes ingredients, instructions, nutrition, cuisines, diets, etc.
+# 📄 **Recipe Details Page**
+
+The details page includes:
+
+- High‑resolution recipe image
+- Title, time, servings, calories
+- Ingredients list
+- Step‑by‑step instructions
+- Add to Favorites button
+- Add to Meal Plan (day selector)
+- Fully functional **Similar Recipes** section
+
+Similar recipes are fetched efficiently using:
+
+1. `/similar` → get IDs
+2. `/informationBulk` → get full objects
 
 ---
 
-## 🌐 **API Integration Preparation**
+# 📚 **Recipes Page (Search + Filters + Pagination)**
 
-A placeholder API file is included:
+The recipes page includes:
 
-```
-src/lib/spoonacular.js
-```
+- Search bar (controlled input)
+- Filters:
+  - Cuisine
+  - Diet
+  - Sort by time (asc/desc)
+- Pagination:
+  - 12 recipes per page
+  - Prev/Next buttons
+  - Total pages calculated from API response
 
-It contains:
-
-- `searchRecipes(query, filters)`
-- `getRecipeById(id)`
-- `getSimilarRecipes(id)`
-
-These currently return mock data but are structured to be replaced with real Spoonacular API calls in Phase 3.
-
-This satisfies the **Phase 2 “API Preparation” requirement**.
+All results are displayed using the shared `RecipeCard` component.
 
 ---
 
-## 📁 **Project Structure (Phase 2)**
+# 🎨 **Styling & Responsiveness**
+
+MealMate uses:
+
+### **CSS Modules**
+
+- `Recipes.module.css`
+- `RecipeDetails.module.css`
+
+### **Global Styles**
+
+- Hero section
+- Action cards
+- Meal planner grid
+- Toast animations
+- Responsive layout
+
+### **Responsive Features**
+
+- Mobile‑friendly grid layouts
+- Scaled hero image
+- Adaptive typography
+- Clean spacing and alignment
+
+---
+
+# ⚡ **Performance Optimizations**
+
+Phase 3 includes real performance improvements:
+
+### **1. Pagination**
+
+- Only loads 12 recipes at a time
+- Reduces payload size
+- Improves speed
+
+### **2. Bulk Similar Recipes**
+
+- Replaces 4–6 API calls with **2 calls total**
+
+### **3. LocalStorage Caching**
+
+- Favorites and meal plan require **zero API calls**
+- Faster navigation
+- Offline-friendly
+
+### **4. Clean State Normalization**
+
+- Prevents corrupted data
+- Ensures consistent behavior
+
+---
+
+# 📁 **Final Project Structure (Phase 3)**
 
 ```
 src/
@@ -165,77 +238,70 @@ src/
   context/
     AppContext.js
 
-  data/
-    recipes.js   (mock Spoonacular-style data)
-
   lib/
-    spoonacular.js   (API placeholder)
+    spoonacular.js
 
   styles/
     globals.css
     Recipes.module.css
     RecipeDetails.module.css
+
+public/
+  hero.jpg
+  logo.png
 ```
 
 ---
 
-## 🧠 **Phase 2 Learning Objectives Covered**
+# 🧠 **Phase 3 Learning Objectives Covered**
 
-### **1. Routing & Navigation**
+### ✔ Real API integration
 
-- Dynamic routes
-- Multi‑page navigation
-- Clean URL structure
+### ✔ Pagination & performance optimization
 
-### **2. Component Layout & Modularity**
+### ✔ Shared state with Context API
 
-- Reusable components
-- Shared grid layout
-- Clean separation of UI logic
+### ✔ Dynamic routing
 
-### **3. Responsive Styling & Theming**
+### ✔ Responsive UI
 
-- CSS Modules
-- Fixed card sizes
-- Mobile‑friendly layout
-- Styled interactive elements
+### ✔ Error handling
 
-### **4. Effective State Management**
+### ✔ Deployment-ready structure
 
-- Favorites logic
-- Meal planner logic
-- Toast notifications
-- LocalStorage persistence
-
-### **5. Project Organization & Code Clarity**
-
-- Clean folder structure
-- Readable, maintainable code
-- API prep file included
+### ✔ Clean code organization
 
 ---
 
-## 🖼️ **Screenshots Required for Submission**
+# 🖼️ **Screenshots Required for Final Submission**
 
 Include screenshots of:
 
-- Home page
-- Recipes page
+- Home page (hero + actions)
+- Recipes page (search + filters + pagination)
 - Recipe details page
+- Similar recipes section
 - Favorites page
 - Meal planner page
-- Similar recipes section
-- Toast notification
-- Mobile view (optional but recommended)
+- Toast notifications
+- Mobile view (recommended)
 
 ---
 
-## 🛠️ **How to Run the Project**
+# 🛠️ **How to Run the Project**
 
 ### Install dependencies
 
 ```bash
 npm install
+```
+
+### Add your API key
+
+Create `.env.local`:
+
+```
+NEXT_PUBLIC_SPOONACULAR_API_KEY=YOUR_KEY_HERE
 ```
 
 ### Run development server
@@ -252,29 +318,26 @@ http://localhost:3000
 
 ---
 
-## 🔮 **Planned Features (Phase 3)**
+# 🚀 **Deployment**
 
-- Real Spoonacular API integration
-- Real similar recipes from API
-- Loading skeletons
-- Pagination
-- Drag‑and‑drop weekly planner
-- Shopping list generator
-- Error handling
-- Deployment to Vercel
+The project is fully compatible with **Render** or **Vercel**:
+
+- Automatic routing
+- Environment variables
+- Optimized production build
 
 ---
 
-## 👥 **Team Roles (from Proposal)**
+# 👥 **Team Roles**
 
-- **Mykhaylo Maslyuk** – API Integration & Data Handling
-- **Maksym Orlov** – Frontend Components
-- **Jonathan Griffith & Ethan Huynh** – State Management & Logic
-- **Ramone Mitchell‑Mckoy** – Styling & UI/UX
-- **All Members** – Deployment & Testing
+- **Mykhailo Maslyuk** – Lead Frontend, API Integration, State Management
+- **Maksym Orlov** – UI Components & Layout
+- **Jonathan Griffith & Ethan Huynh** – Logic, Context API, Data Flow
+- **Ramone Mitchell‑Mckoy** – Styling, UX, Visual Design
+- **All Members** – Testing, Debugging, Deployment
 
 ---
 
-## 📄 **License**
+# 📄 **License**
 
 This project is for educational purposes as part of CPAN144.

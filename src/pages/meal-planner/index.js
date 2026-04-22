@@ -1,37 +1,39 @@
+// src/pages/meal-planner/index.js
 import Link from "next/link";
 import { useAppContext } from "../../context/AppContext";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export default function MealPlannerPage() {
-  const { mealPlan, recipes } = useAppContext();
-
-  const getRecipeForDay = (day) => {
-    const id = mealPlan[day];
-    if (!id) return null;
-    return recipes.find((r) => r.id === id) || null;
-  };
+  const { mealPlan, clearDay } = useAppContext();
 
   return (
     <section>
       <h1 className="page-title">Weekly Meal Planner</h1>
       <p className="page-subtitle">
-        Recipes assigned from the recipe details page will appear here.
+        Meals you assign from the recipe details page will appear here.
       </p>
 
-      <div className="meal-planner-grid">
+      <div className="meal-grid">
         {DAYS.map((day) => {
-          const recipe = getRecipeForDay(day);
+          const recipe = mealPlan[day];
           return (
-            <div key={day} className="meal-day-card">
+            <div key={day} className="meal-cell">
               <h3>{day}</h3>
               {recipe ? (
                 <>
-                  <p>{recipe.title}</p>
-                  <Link href={`/recipes/${recipe.id}`}>View recipe</Link>
+                  <Link href={`/recipes/${recipe.id}`} className="meal-link">
+                    {recipe.title}
+                  </Link>
+                  <button
+                    className="meal-clear-btn"
+                    onClick={() => clearDay(day)}
+                  >
+                    Clear
+                  </button>
                 </>
               ) : (
-                <p>No recipe assigned.</p>
+                <p className="meal-empty">No recipe assigned.</p>
               )}
             </div>
           );
